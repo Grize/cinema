@@ -1,11 +1,12 @@
 def movies(filmName)
     filmName = ARGV[0]
-    if filmName == 'Titanick'
-        puts 'Titanick is a good film'
-    elsif filmName == 'Elky'
-        puts 'Elky is a bad film'
-    else 
-        puts "Didn't see " + filmName
-    end
+    case filmName
+when 'Titanic'
+    puts 'Titanic is a good film'
+when 'Elky'
+    puts 'Elky is a bad film'
+else
+    puts "Didn't seen " + filmName
+end
 end
 movies(ARGV)
