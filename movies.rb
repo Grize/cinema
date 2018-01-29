@@ -1,12 +1,12 @@
 def movies(filmName)
-    filmName = ARGV[0]
+    ARGV.each do |filmName|
     case filmName
 when 'Titanic'
     puts 'Titanic is a good film'
 when 'Elky'
     puts 'Elky is a bad film'
 else
-    puts "Didn't seen " + filmName
+    puts 'Never heard about ' + filmName
 end
 end
-movies(ARGV)
+end
