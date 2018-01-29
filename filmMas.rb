@@ -1,5 +1,4 @@
 def moviesMass(filmsNames)
-
     ARGV.each do |filmName|
         case filmName
     when 'Titanic'
@@ -11,5 +10,3 @@ def moviesMass(filmsNames)
     end
 end
 end
-
-moviesMass(ARGV)
