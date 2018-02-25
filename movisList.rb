@@ -27,14 +27,46 @@ def findStrings(films)
 end
 
 def somefunc(film)
-  someTresh = []
-  needFilms = []
-  needFilms << film.select do |h| 
+  film.select do |h| 
     h.values_at('name').any?{|word| word.include? 'Max'}
   end
-  puts needFilms
+end
+
+def ratingFunc(arr)
+  film = []
+  arr.each do |h|
+    new_h = Hash.new
+    new_h[h.values_at('name')] = h.values_at('rating')
+    film << new_h
+  end
+  
+  fromHashToString =[]
+   film.each do |h|
+   fromHashToString << h.transform_values {|v| v.to_s.delete('{},[],""').to_f}
+  end
+  puts fromHashToString
+  def numManipulater(v, roundV)
+    string = ''
+    if roundV == 8
+      string = v * 10 - roundV * 10
+    elsif roundV > 8
+      puts string = 10 + (v * 10 - roundV * 10)
+    else 
+      puts 'error'
+    end 
+    string
+  end
+  final = []
+    string = '*'
+    fromHashToString.each do |h|
+      final << h.transform_values do |v|
+        string *= numManipulater(v, v.round)
+    end
+  end
+  puts final.to_s.delete('{}[]""').split(',')
 end
 
 films = fileOpen(ARGV.first)
 film = findStrings(films)
-somefunc(film)
+arr = somefunc(film)
+ratingFunc(arr)
