@@ -44,13 +44,13 @@ def ratingFunc(arr)
    film.each do |h|
    fromHashToString << h.transform_values {|v| v.to_s.delete('{},[],""').to_f}
   end
-  puts fromHashToString
+  
   def numManipulater(v, roundV)
     string = ''
     if roundV == 8
       string = v * 10 - roundV * 10
     elsif roundV > 8
-      puts string = 10 + (v * 10 - roundV * 10)
+      string = 10 + (v * 10 - roundV * 10)
     else 
       puts 'error'
     end 
