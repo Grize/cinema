@@ -1,19 +1,23 @@
 def fileOpen(fileName)
   films = []
-  ARGV.each do |fileName|
-    if File.exist?(fileName)
-      File.open(fileName) do |file|
-        file.each do |line|
-          films << line
-        end
+  if ARGV.empty?
+    File.open('movies.txt') do |film|
+      film.each do |line|
+        films << line
       end
-    elsif File.exist?(fileName) == false
-      puts "Achtung! File don't exist!"
-    else 
-      File.open('movies.txt') do |file|
-        file.each do |line| 
-          films << line
+    end
+  else
+    ARGV.each do |fileName|
+      if File.exist?(fileName)
+        File.open(fileName) do |file|
+          file.each do |line|
+            films << line
+          end
         end
+      elsif File.exist?(fileName) == false
+        puts "Achtung! #{fileName} don't exist!"
+      else 
+        puts "I don't what you did, but you destroy everything"
       end
     end
   end
@@ -33,7 +37,7 @@ def findStrings(films)
     h['genre'] = splitLine[5]
     h['timing'] = splitLine[6]
     h['rating'] = splitLine[7]
-    h['produser'] = splitLine[8]
+    h['producer'] = splitLine[8]
     h['actors'] = splitLine[9]
     film << h
   end
