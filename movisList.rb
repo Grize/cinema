@@ -1,9 +1,23 @@
 def fileOpen(fileName)
   films = []
-  File.open(fileName){|file| file.each do |line|
-    films << line
-  end}
-  films
+  ARGV.each do |fileName|
+    if File.exist?(fileName)
+      File.open(fileName) do |file|
+        file.each do |line|
+          films << line
+        end
+      end
+    elsif File.exist?(fileName) == false
+      puts "Achtung! File don't exist!"
+    else 
+      File.open('movies.txt') do |file|
+        file.each do |line| 
+          films << line
+        end
+      end
+    end
+  end
+films
 end
 
 def findStrings(films)
@@ -44,7 +58,7 @@ def ratingFunc(arr)
    film.each do |h|
    fromHashToString << h.transform_values {|v| v.to_s.delete('{},[],""').to_f}
   end
-  
+
   def numManipulater(v, roundV)
     string = ''
     if roundV == 8
