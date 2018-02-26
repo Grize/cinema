@@ -17,7 +17,7 @@ def fileOpen(fileName)
       elsif File.exist?(fileName) == false
         puts "Achtung! #{fileName} don't exist!"
       else 
-        puts "I don't what you did, but you destroy everything"
+        puts "I don't know what you did, but you destroy everything!"
       end
     end
   end
