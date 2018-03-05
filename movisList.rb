@@ -46,7 +46,7 @@ end
 
 def somefunc(film)
   film.select do |h| 
-    h.values_at('name').any?{|word| word.include? 'Max'}
+    h.values_at('name').any?{|word| word.include? 'Godfather'}
   end
 end
 
