@@ -82,16 +82,15 @@ def filmCountry(film)
     end
   end
   result << "Film didn't creat in USA."
-  result << needFilms.length
+  puts result << needFilms.length
 end
 
 def producersFunc (film)
   producerList = []
   film.each do |h|
-    producerList << h.values_at('producer')
+   producerList << h.values_at('producer')
   end
-   producerList = producerList.uniq
-   puts producerList.sort
+  puts producerList.uniq.sort_by {|s| s.to_s.delete('""[]').scan(/\w+$/)}
 end
 
 def printFunc(fTime,fDate)
@@ -109,8 +108,8 @@ def printFunc(fTime,fDate)
       firstTenComedy << "#{v.values_at('name')} (#{v.values_at('crearedAdd')}; #{v.values_at('genre')}) - #{v.values_at('timing')}".delete('""[]')
     end
   end
-  topFiveTiming
-  firstTenComedy
+  puts topFiveTiming
+  puts firstTenComedy
 end
 
 films = fileOpen(ARGV.first)
