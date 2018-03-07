@@ -45,22 +45,22 @@ def findStrings(films)
 end
 
 def somefunc(film)
-  film.select do |h| 
-    h.values_at('name').any?{|word| word.include? 'Max'}
+  film.select do |movie| 
+    movie.values_at('name').any?{|word| word.include? 'Max'}
   end
 end
 
 def ratingFunc(arr)
   film = []
-  arr.each do |h|
+  arr.each do |movie|
     new_h = Hash.new
-    new_h[h.values_at('name')] = h.values_at('rating')
+    new_h[movie.values_at('name')] = h.values_at('rating')
     film << new_h
   end
   
   fromHashToString =[]
-   film.each do |h|
-   fromHashToString << h.transform_values {|v| v.to_s.delete('{},[],""').to_f}
+   film.each do |movie|
+   fromHashToString << movie.transform_values {|v| v.to_s.delete('{},[],""').to_f}
   end
 
   def numManipulater(v, roundV)

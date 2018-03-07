@@ -14,18 +14,18 @@ def lineToHash(films)
   film = []
   films.each do |line|
     splitLine = line.split('|')
-    h = Hash.new
-    h["url"] = splitLine[0]
-    h['name'] = splitLine[1]
-    h['year'] = splitLine[2]
-    h['country'] = splitLine[3]
-    h['crearedAdd'] = splitLine[4]
-    h['genre'] = splitLine[5]
-    h['timing'] = splitLine[6]
-    h['rating'] = splitLine[7]
-    h['producer'] = splitLine[8]
-    h['actors'] = splitLine[9]
-    film << h
+    hash = Hash.new
+    hash["url"] = splitLine[0]
+    hash['name'] = splitLine[1]
+    hash['year'] = splitLine[2]
+    hash['country'] = splitLine[3]
+    hash['crearedAdd'] = splitLine[4]
+    hash['genre'] = splitLine[5]
+    hash['timing'] = splitLine[6]
+    hash['rating'] = splitLine[7]
+    hash['producer'] = splitLine[8]
+    hash['actors'] = splitLine[9]
+    film << hash
   end
   film
 end
@@ -45,7 +45,7 @@ def filmDate(film)
   end
   arrayWithTenFirstComedy = []
   comedyFilms.each do |sudenlyArray|
-   emptyArray << sudenlyArray.min_by(10) do |movie|
+   arrayWithTenFirstComedy << sudenlyArray.min_by(10) do |movie|
     movie.values_at('crearedAdd').to_s.delete('[]""').to_i
    end
   end
@@ -61,7 +61,7 @@ def filmCountry(film)
     else
     end
   end
-  result << needFilms.length
+  puts result << needFilms.length
 end
 
 def producersFunc (film)
@@ -69,7 +69,7 @@ def producersFunc (film)
   film.each do |h|
    producerList << h.values_at('producer')
   end
-   producerList.uniq.sort_by {|s| s.to_s.delete('""[]').scan(/\w+$/)}
+  puts producerList.uniq.sort_by {|s| s.to_s.delete('""[]').scan(/\w+$/)}
 end
 
 def printFunc(fTime,fDate)
@@ -85,8 +85,8 @@ def printFunc(fTime,fDate)
       resultArrayWithComedy << "#{v.values_at('name')} (#{v.values_at('crearedAdd')}; #{v.values_at('genre')}) - #{v.values_at('timing')}".delete('""[]')
     end
   end
-  resultArrayWithFiveLongestFilm
-  resultArrayWithComedy
+  puts resultArrayWithFiveLongestFilm
+  puts resultArrayWithComedy
 end
 
 films = fileOpen(ARGV.first)
