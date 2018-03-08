@@ -24,7 +24,7 @@ def fileSelectAndTakeContent(fileName)
 films
 end
 
-def findStrings(films)
+def filmsWithHash(films)
   hashFilms = []
   films.each do |line|
     splitLine = line.split('|')
@@ -36,7 +36,7 @@ def findStrings(films)
     filmInfo['crearedAdd'] = splitLine[4].to_i
     filmInfo['genre'] = splitLine[5]
     filmInfo['timing'] = splitLine[6].to_i
-    filmInfo['rating'] = splitLine[7].to_f
+    filmInfo['rating'] = ratingInStars(splitLine[7].to_f)
     filmInfo['producer'] = splitLine[8]
     filmInfo['actors'] = splitLine[9]
     hashFilms << filmInfo
@@ -44,42 +44,24 @@ def findStrings(films)
   hashFilms
 end
 
-def findMaxinFilm(hashFilms)
+def findFilmsWithMax(hashFilms)
   hashFilms.select do |movie| 
     movie.values_at('name').any?{|string| string.include? 'Max'}
   end
 end
 
-def fromFloatToStar(filmsWithMax)
-  films = []
-  filmsWithMax.each do |movie|
-    new_h = Hash.new
-    new_h[movie.values_at('name')] = movie.values_at('rating')
-    films << new_h
-  end
-
-  def numManipulater(floatRating, roundRating)
-    string = ''
-    if roundRating == 8
-      string = floatRating * 10 - roundRating * 10
-    elsif roundRating > 8
-      string = 10 + (floatRating * 10 - roundRating * 10)
-    else 
-      puts 'error'
-    end 
-    string
-  end
-  final = []
-    string = '*'
-    fromHashToString.each do |film|
-      final << film.transform_values do |rating|
-        string *= numManipulater(rating, rating.round)
-    end
-  end
-  puts final.to_s.delete('{}[]""').split(',')
+def ratingInStars(floatRating)
+  string = '*'
+  string *= (floatRating - 8) * 10
 end
 
-films = fileOpen(ARGV.first)
-hashFilms = findStrings(films)
-filmsWithMax = somefunc(hashFilms)
-ratingFunc(filmsWithMax)
+def printNameAndRating(findFilmsWithMax)
+  findFilmsWithMax.each do |film|
+    puts "#{film.values_at('name').to_s.delete('[]""')}: #{film.values_at('rating').to_s.delete('""[]')}"
+  end
+end
+
+films = fileSelectAndTakeContent(ARGV.first)
+hashFilms = filmsWithHash(films)
+filmsWithMax = findFilmsWithMax(hashFilms)
+printNameAndRating(filmsWithMax)
