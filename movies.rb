@@ -57,11 +57,6 @@ def fromFloatToStar(filmsWithMax)
     new_h[movie.values_at('name')] = movie.values_at('rating')
     films << new_h
   end
-  
-  fromHashToString = []
-   filmsWithMax.each do |movie|
-   fromHashToString << movie.transform_values {|value| value.to_s.delete('{},[],""').to_f}
-  end
 
   def numManipulater(floatRating, roundRating)
     string = ''
