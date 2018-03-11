@@ -37,7 +37,7 @@ def filmsWithHash(films)
     film['name'] = splitLine[1]
     film['year'] = splitLine[2].to_i
     film['country'] = splitLine[3]
-    film['crearedAdd'] = splitLine[4].to_i
+    puts film['createdDate'] = splitLine[4].to_i
     film['genre'] = splitLine[5]
     film['timing'] = splitLine[6].to_i
     film['rating'] = ratingInStars(splitLine[7].to_f)
@@ -65,7 +65,68 @@ def printNameAndRating(findFilmsWithMax)
   end
 end
 
+def filmTiming(film)
+  arrayWithFiveLongestFilms = []
+  arrayWithFiveLongestFilms << film.max_by(5) do |movie|
+    movie.values_at('timing').to_s.delete('[]""min').to_i
+  end
+  arrayWithFiveLongestFilms
+end
+
+def filmDate(film)
+  comedyFilms = []
+  comedyFilms << film.select do |movie|
+    movie.values_at('genre').any? {|word| word.include? 'Comedy'}
+  end
+  arrayWithTenFirstComedy = []
+  comedyFilms.each do |sudenlyArray|
+   arrayWithTenFirstComedy << sudenlyArray.min_by(10) do |film|
+    film.values_at('createdDate')
+   end
+  end
+  arrayWithTenFirstComedy
+end
+
+def filmCountry(film)
+  needFilms = []
+  film.each do |movie|
+    if movie.value?("USA") == false
+      needFilms << movie
+    else
+    end
+  end
+  puts needFilms.length
+end
+
+def producersList(film)
+  producerList = []
+  film.each do |movie|
+   producerList << movie.values_at('producer')
+  end
+  puts producerList.uniq.sort_by {|s| s.to_s.delete('""[]').scan(/\w+$/)}
+end
+
+def printAllInfoAboutFilm(filmTime,filmDate)
+  resultArrayWithFiveLongestFilm = []
+  resultArrayWithComedy = []
+  filmTime.each do |movie|
+    movie.each do |v|
+      resultArrayWithFiveLongestFilm << "#{v.values_at('name')} (#{v.values_at('createdDate')}; #{v.values_at('genre')}) - #{v.values_at('timing')}".delete('""[]')
+    end
+  end
+  filmDate.each do |movie|
+    movie.each do |v|
+      resultArrayWithComedy << "#{v.values_at('name')} (#{v.values_at('createdDate')}; #{v.values_at('genre')}) - #{v.values_at('timing')}".delete('""[]')
+    end
+  end
+  puts resultArrayWithFiveLongestFilm
+  puts resultArrayWithComedy
+end
+
 films = checkForFile(ARGV.first)
 hashFilms = filmsWithHash(films)
 filmsWithMax = findFilmsWithMax(hashFilms)
 printNameAndRating(filmsWithMax)
+filmCountry(hashFilms)
+producersList(hashFilms)
+printAllInfoAboutFilm(filmTiming(hashFilms), filmDate(hashFilms))
