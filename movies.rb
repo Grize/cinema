@@ -37,7 +37,7 @@ def filmsWithHash(films)
     film['name'] = splitLine[1]
     film['year'] = splitLine[2].to_i
     film['country'] = splitLine[3]
-    puts film['createdDate'] = splitLine[4].to_i
+    film['createdDate'] = splitLine[4].to_i
     film['genre'] = splitLine[5]
     film['timing'] = splitLine[6].to_i
     film['rating'] = ratingInStars(splitLine[7].to_f)
