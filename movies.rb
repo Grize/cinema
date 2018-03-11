@@ -1,45 +1,49 @@
-def fileSelectAndTakeContent(fileName)
-  films = []
+def checkForFile(filmName)
+  films =[]
   if ARGV.empty?
     File.open('movies.txt') do |content|
       content.each do |line|
         films << line
       end
     end
-  else
-    ARGV.each do |fileName|
-      if File.exist?(fileName)
-        File.open(fileName) do |content|
-          content.each do |line|
-            films << line
-          end
+  else 
+    films.concat(checkForExist(ARGV.first))
+  end
+  films
+end
+
+def checkForExist(fileName)
+  films = []
+  ARGV.each do |fileName|
+    if File.exist?(fileName)
+      File.open(fileName) do |content|
+        content.each do |line|
+          films << line 
         end
-      elsif File.exist?(fileName) == false
-        puts "Achtung! #{fileName} don't exist!"
-      else 
-        puts "I don't know what you did, but you destroy everything!"
       end
+    else
+      puts "Warning! #{fileName} don't exist!"
     end
   end
-films
+  films
 end
 
 def filmsWithHash(films)
   hashFilms = []
   films.each do |line|
     splitLine = line.split('|')
-    filmInfo = Hash.new
-    filmInfo["url"] = splitLine[0]
-    filmInfo['name'] = splitLine[1]
-    filmInfo['year'] = splitLine[2].to_i
-    filmInfo['country'] = splitLine[3]
-    filmInfo['crearedAdd'] = splitLine[4].to_i
-    filmInfo['genre'] = splitLine[5]
-    filmInfo['timing'] = splitLine[6].to_i
-    filmInfo['rating'] = ratingInStars(splitLine[7].to_f)
-    filmInfo['producer'] = splitLine[8]
-    filmInfo['actors'] = splitLine[9]
-    hashFilms << filmInfo
+    film = Hash.new
+    film["url"] = splitLine[0]
+    film['name'] = splitLine[1]
+    film['year'] = splitLine[2].to_i
+    film['country'] = splitLine[3]
+    film['crearedAdd'] = splitLine[4].to_i
+    film['genre'] = splitLine[5]
+    film['timing'] = splitLine[6].to_i
+    film['rating'] = ratingInStars(splitLine[7].to_f)
+    film['producer'] = splitLine[8]
+    film['actors'] = splitLine[9]
+    hashFilms << film
   end
   hashFilms
 end
@@ -61,7 +65,7 @@ def printNameAndRating(findFilmsWithMax)
   end
 end
 
-films = fileSelectAndTakeContent(ARGV.first)
+films = checkForFile(ARGV.first)
 hashFilms = filmsWithHash(films)
 filmsWithMax = findFilmsWithMax(hashFilms)
 printNameAndRating(filmsWithMax)
