@@ -35,7 +35,7 @@ def doArrayWithOpenStr(row)
     film['name'] = row[1]
     film['year'] = row[2].to_i
     film['country'] = row[3]
-    film['createdDate'] = row[4].to_i
+    film['createdDate'] = anyStringToDate(row[4])
     film['genre'] = row[5]
     film['timing'] = row[6].to_i
     film['rating'] = row[7]
@@ -43,6 +43,18 @@ def doArrayWithOpenStr(row)
     film['actors'] = row[9]
     films << OpenStruct.new(film)
   films
+end
+
+def anyStringToDate(row)
+  if row.length == 10
+    Date.parse(row)
+  elsif row.length == 7
+    row += '-01'
+    Date.parse(row)
+  else
+    row += '-01-01'
+    Date.parse(row)
+  end
 end
 
 def findFilmsWithMax(hashFilms)
