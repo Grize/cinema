@@ -1,13 +1,15 @@
+require 'csv'
+require 'ostruct'
+require 'date'
+
 def checkForFile(filmName)
-  films =[]
+  films = []
   if ARGV.empty?
-    File.open('movies.txt') do |content|
-      content.each do |line|
-        films << line
-      end
+    CSV.foreach('movies.txt', {:col_sep => '|'}) do |row|
+      films << doArrayWithOpenStr(row)
     end
   else 
-    films.concat(checkForExist(ARGV.first))
+    checkForExist(ARGV.first)
   end
   films
 end
@@ -16,10 +18,8 @@ def checkForExist(fileName)
   films = []
   ARGV.each do |fileName|
     if File.exist?(fileName)
-      File.open(fileName) do |content|
-        content.each do |line|
-          films << line 
-        end
+      CSV.foreach("#{fileName}", {:col_sep => '|'}) do |row|
+        films << doArrayWithOpenStr(row)
       end
     else
       puts "Warning! #{fileName} don't exist!"
@@ -28,24 +28,21 @@ def checkForExist(fileName)
   films
 end
 
-def filmsWithHash(films)
-  hashFilms = []
-  films.each do |line|
-    splitLine = line.split('|')
-    film = Hash.new
-    film["url"] = splitLine[0]
-    film['name'] = splitLine[1]
-    film['year'] = splitLine[2].to_i
-    film['country'] = splitLine[3]
-    film['createdDate'] = splitLine[4].to_i
-    film['genre'] = splitLine[5]
-    film['timing'] = splitLine[6].to_i
-    film['rating'] = ratingInStars(splitLine[7].to_f)
-    film['producer'] = splitLine[8]
-    film['actors'] = splitLine[9]
-    hashFilms << film
-  end
-  hashFilms
+def doArrayWithOpenStr(row)
+  films = []
+  film = Hash.new
+    film["url"] = row[0]
+    film['name'] = row[1]
+    film['year'] = row[2].to_i
+    film['country'] = row[3]
+    film['createdDate'] = row[4].to_i
+    film['genre'] = row[5]
+    film['timing'] = row[6].to_i
+    film['rating'] = row[7]
+    film['producer'] = row[8]
+    film['actors'] = row[9]
+    films << OpenStruct.new(film)
+  films
 end
 
 def findFilmsWithMax(hashFilms)
@@ -61,7 +58,7 @@ end
 
 def printNameAndRating(findFilmsWithMax)
   findFilmsWithMax.each do |film|
-    puts "#{film.values_at('name').to_s.delete('[]""')}: #{film.values_at('rating').to_s.delete('""[]')}"
+    "#{film.values_at('name').to_s.delete('[]""')}: #{film.values_at('rating').to_s.delete('""[]')}"
   end
 end
 
@@ -95,7 +92,7 @@ def filmCountry(film)
     else
     end
   end
-  puts needFilms.length
+  needFilms.length
 end
 
 def producersList(film)
@@ -103,7 +100,7 @@ def producersList(film)
   film.each do |movie|
    producerList << movie.values_at('producer')
   end
-  puts producerList.uniq.sort_by {|s| s.to_s.delete('""[]').scan(/\w+$/)}
+  producerList.uniq.sort_by {|s| s.to_s.delete('""[]').scan(/\w+$/)}
 end
 
 def printAllInfoAboutFilm(filmTime,filmDate)
@@ -119,12 +116,11 @@ def printAllInfoAboutFilm(filmTime,filmDate)
       resultArrayWithComedy << "#{v.values_at('name')} (#{v.values_at('createdDate')}; #{v.values_at('genre')}) - #{v.values_at('timing')}".delete('""[]')
     end
   end
-  puts resultArrayWithFiveLongestFilm
-  puts resultArrayWithComedy
+  resultArrayWithFiveLongestFilm
+  resultArrayWithComedy
 end
 
 films = checkForFile(ARGV.first)
-hashFilms = filmsWithHash(films)
 filmsWithMax = findFilmsWithMax(hashFilms)
 printNameAndRating(filmsWithMax)
 filmCountry(hashFilms)
