@@ -63,7 +63,7 @@ def sortByCreatedDate(films)
     allMonth << film.createdDate.mon
   end
   allMonth.sort_by{|mon| mon}.each {|mon| sumOfMonth[mon] += 1}
-  puts changeNameofKey(sumOfMonth)
+  puts changeNameofKey(sumOfMonth).to_s.delete('{}:')
 end
 
 def changeNameofKey(sumOfMonth)
@@ -163,3 +163,4 @@ printNameAndRating(filmsWithMax)
 filmCountry(films)
 producersList(films)
 printAllInfoAboutFilm(filmTiming(films), filmDate(films))
+sortByCreatedDate(films)
