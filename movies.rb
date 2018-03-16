@@ -56,6 +56,32 @@ def anyStringToDate(row)
   end
 end
 
+def sortByCreatedDate(films)
+  allMonth = []
+  sumOfMonth = Hash.new(0)
+  films.each do |film| 
+    allMonth << film.createdDate.mon
+  end
+  allMonth.sort_by{|mon| mon}.each {|mon| sumOfMonth[mon] += 1}
+  puts changeNameofKey(sumOfMonth)
+end
+
+def changeNameofKey(sumOfMonth)
+  sumOfMonth[:January] = sumOfMonth.delete(1)
+  sumOfMonth[:February] = sumOfMonth.delete(2)
+  sumOfMonth[:March] = sumOfMonth.delete(3)
+  sumOfMonth[:April] = sumOfMonth.delete(4)
+  sumOfMonth[:May] = sumOfMonth.delete(5)
+  sumOfMonth[:June] = sumOfMonth.delete(6)
+  sumOfMonth[:July] = sumOfMonth.delete(7)
+  sumOfMonth[:August] = sumOfMonth.delete(8)
+  sumOfMonth[:September] = sumOfMonth.delete(9)
+  sumOfMonth[:October] = sumOfMonth.delete(10)
+  sumOfMonth[:November] = sumOfMonth.delete(11)
+  sumOfMonth[:December] = sumOfMonth.delete(12)
+  sumOfMonth
+end
+
 def findFilmsWithMax(films)
   films.select do |movie| 
     movie.name.include? 'Max'
