@@ -6,13 +6,13 @@ def checkForFile()
   films = ARGV.first || 'movies.txt' 
   arrayWithFilms = []
   CSV.foreach(films, {:col_sep => '|'}) do |row|
-    arrayWithFilms<< doArrayWithOpenStr(row)
+    arrayWithFilms<< doArrayWithHash(row)
     end
     arrayWithFilms
 end
 
 
-def doArrayWithOpenStr(row)
+def doArrayWithHash(row)
   {
     url: row[0],
     name: row[1],
