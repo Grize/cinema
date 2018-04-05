@@ -2,7 +2,7 @@ require 'csv'
 require 'ostruct'
 require 'date'
 
-def checkForFile(filmName)
+def checkForFile()
   films = ARGV.first || 'movies.txt' 
   arrayWithFilms = []
   CSV.foreach(films, {:col_sep => '|'}) do |row|
@@ -43,10 +43,10 @@ def sortByCreatedDate(films)
   allMonths = []
   sumOfMonths = Hash.new(0)
   films.each do |film|
-    month = Date::MONTHNAMES[film.createdDate.mon]
+    month = Date::MONTHNAMES[film[:createdDate].mon]
     sumOfMonths[month] += 1
   end
-  puts sumOfMonths
+  sumOfMonths
 end
 
 def findFilmsWithMax(films)
@@ -62,7 +62,7 @@ end
 
 def printNameAndRating(findFilmsWithMax)
   findFilmsWithMax.each do |film|
-    puts "#{film[:name]}: #{film[:rating]}"
+    "#{film[:name]}: #{film[:rating]}"
   end
 end
 
@@ -112,11 +112,11 @@ def printAllInfoAboutFilm(arrayWithNeedFilms)
   end
 end
 
-films = checkForFile(ARGV.first)
+films = checkForFile()
 filmsWithMax = findFilmsWithMax(films)
-#puts printNameAndRating(filmsWithMax)
-#filmCountry(films)
-#filmTiming(films)
-#filmDate(films)
-#producersList(films)
-#sortByCreatedDate(films)
+printNameAndRating(filmsWithMax)
+filmCountry(films)
+filmTiming(films)
+filmDate(films)
+producersList(films)
+sortByCreatedDate(films)
