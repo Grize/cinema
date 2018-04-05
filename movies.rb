@@ -40,7 +40,6 @@ def anyStringToDate(row)
 end
 
 def sortByCreatedDate(films)
-  allMonths = []
   sumOfMonths = Hash.new(0)
   films.each do |film|
     month = Date::MONTHNAMES[film[:createdDate].mon]
