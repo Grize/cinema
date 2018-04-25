@@ -32,11 +32,11 @@ end
 def filmDate(collection)
   comedyFilms = []
   comedyFilms << collection.all.select do |movie|
-    movie.toHash[:genre].include? 'Comedy'
+    movie.has_genre?('Comedy')
   end
   arrayWithTenFirstComedy = []
   comedyFilms.each do |sudenlyArray|
-   arrayWithTenFirstComedy << sudenlyArray.min_by(10) do |film|
+    arrayWithTenFirstComedy << sudenlyArray.min_by(10) do |film|
     film.toHash[:createdDate]
    end
   end
