@@ -17,14 +17,14 @@ class Movie
   
   def has_genre?(genre) 
     if @genre.include?(genre) == true
-      puts true
+      true
     else
-      puts "We don't have #{genre} film."
+      false
     end
   end
-  def to_s
-    "#{@name} - #{@year}, #{@country}, #{@createdDate} - #{@genre}, #{@timing}, #{@rating}, #{@producer}, #{@actors}"
-  end
+  #def to_s
+  #  "#{@name} - #{@year}, #{@country}, #{@createdDate} - #{@genre}, #{@timing}, #{@rating}, #{@producer}, #{@actors}"
+  #end
 end
 def anyStringToDate(row)
       if row.length == 10
