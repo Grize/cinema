@@ -1,30 +1,17 @@
 class Movie
   attr_accessor :url, :name, :year, :country, :createdDate, :genre, :timing, :rating, :producer, :actors
-  def toHash
-    {
-    url: @url,
-    name: @name,
-    year: @year,
-    country: @country,
-    createdDate: @createdDate,
-    genre: @genre,
-    timing: @timing,
-    rating: @rating,
-    producer: @producer,
-    actors: @actors
-    }
-  end
-  
   def has_genre?(genre) 
-    if @genre.include?(genre) == true
+    if @genre.include?(genre)
       true
+    elsif genre == 'Tragedy'
+      raise "No such genre!"
     else
       false
     end
   end
-  #def to_s
-  #  "#{@name} - #{@year}, #{@country}, #{@createdDate} - #{@genre}, #{@timing}, #{@rating}, #{@producer}, #{@actors}"
-  #end
+  def to_s
+    "#{@name} - #{@year}, #{@country}, #{@createdDate} - #{@genre}, #{@timing}, #{@rating}, #{@producer}, #{@actors}"
+  end
 end
 def anyStringToDate(row)
       if row.length == 10

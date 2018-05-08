@@ -27,25 +27,25 @@ class MoviesCollection
     end
     moviesCollection
   end
-  def sort_by(stat)
-    @movies.sort_by {|movie| movie.toHash[stat]}
+  def sort_by(neededPosition)
+    @movies.sort_by {|movie| movie.send(neededPosition)}
   end
-  def filter(stat, word)
+  def filter(neededPosition, word)
     @movies.select do |movie|
-      movie.toHash[stat].include? word
+      movie.send(neededPosition).include? word
     end
   end
-  def stats(stat)
+  def stats(neededPosition)
     statistic = Hash.new(0)
     @movies.each do |movie|
-      if stat == :month
-        month = Date::MONTHNAMES[movie.toHash[:createdDate].mon]
+      if neededPosition == :month
+        month = Date::MONTHNAMES[movie.send(:createdDate).mon]
         statistic[month] += 1
-      elsif stat == :actors || stat == :genre
-        array = movie.toHash[stat].split(',').first.to_s
+      elsif neededPosition == :actors || neededPosition == :genre
+        array = movie.send(neededPosition).split(',').first.to_s
         statistic[array] += 1
       else
-        thing = movie.toHash[stat]
+        thing = movie.send(neededPosition)
         statistic[thing] += 1
       end
     end
