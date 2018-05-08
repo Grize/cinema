@@ -3,27 +3,28 @@ require 'ostruct'
 require 'date'
 require './MovieCollection.rb'
 
+
 collection = MoviesCollection.new
 def sortByCreatedDate(collection)
-  collection.stats(:month)
+  puts collection.stats(:month)
 end
 
 def findFilmsWithMax(collection)
   collection.all.select do |movie| 
-    movie.send(:name).include? 'Max'
+    movie.toHash[:name].include? 'Max'
   end
 end
 
 def printNameAndRating(findFilmsWithMax)
   findFilmsWithMax.each do |film|
-    "#{film.send(:name)}: #{film.send(:rating)}"
+    "#{film.toHash[:name]}: #{film.toHash[:rating]}"
   end
 end
 
 def filmTiming(collection)
   arrayWithFiveLongestFilms = []
   arrayWithFiveLongestFilms << collection.all.max_by(5) do |movie|
-    movie.send(:timing)
+    movie.toHash[:timing]
   end
   printAllInfoAboutFilm(arrayWithFiveLongestFilms)
 end
@@ -36,16 +37,16 @@ def filmDate(collection)
   arrayWithTenFirstComedy = []
   comedyFilms.each do |sudenlyArray|
     arrayWithTenFirstComedy << sudenlyArray.min_by(10) do |film|
-    film.send(:createdDate)
+    film.toHash[:createdDate]
    end
   end
-  puts printAllInfoAboutFilm(arrayWithTenFirstComedy)
+  printAllInfoAboutFilm(arrayWithTenFirstComedy)
 end
 
 def filmCountry(collection)
   needFilms = []
   collection.all.each do |movie|
-    if movie.send(:country).include?('USA') == false
+    if movie.toHash[:country].include?('USA') == false
       needFilms << movie
     end
   end
@@ -53,7 +54,7 @@ def filmCountry(collection)
 end
 
 def producersList(collection)
-  collection.all.map { |film| film.send(:producer) }
+  collection.all.map { |film| film.toHash[:producer] }
        .uniq
        .sort_by { |s| s.scan(/\w+$/) }
 end
@@ -61,7 +62,7 @@ end
 def printAllInfoAboutFilm(arrayWithNeedFilms)
   arrayWithNeedFilms.each do |movie|
     movie.each do |film|
-      "#{film.send(:name)} (#{film.send(:createdDate)}; #{film.send(:genre)}) - #{film.send(:timing)} min"
+      "#{film.toHash[:name]} (#{film.toHash[:createdDate]}; #{film.toHash[:genre]}) - #{film.toHash[:timing]} min"
     end
   end
 end
