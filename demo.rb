@@ -2,10 +2,18 @@ require 'csv'
 require 'ostruct'
 require 'date'
 require './MovieCollection.rb'
+require './Netflix.rb'
+require './theater.rb'
 
 collection = MoviesCollection.new
+netflix = Netflix.new
+netflix.pay(25)
+#netflix.show('Comedy', :modern)
+netflix.how_much?('Terminator')
+theater = Theater.new
+theater.show(14)
 def sortByCreatedDate(collection)
-  puts collection.stats(:month)
+  collection.stats(:month)
 end
 
 def findFilmsWithMax(collection)

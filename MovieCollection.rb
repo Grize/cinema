@@ -6,19 +6,20 @@ class MoviesCollection
     @movies = []
     films = ARGV.first || 'movies.txt'
     CSV.foreach(films, {:col_sep => '|'}) do |row|
-      movie = Movie.new
-      movie.url = row[0]
-      movie.name = row[1]
-      movie.year = row[2].to_i
-      movie.country = row[3]
-      movie.createdDate = anyStringToDate(row[4])
-      movie.genre = row[5]
-      movie.timing = row[6].to_i
-      movie.rating = ratingInStars(row[7].to_f)
-      movie.producer = row[8]
-      movie.actors = row[9]
-      @movies << movie
+      if row[2].to_i <= 1945
+        movie = AncientMovie.new(row)
+        @movies << movie
+      elsif row[2].to_i >= 1945 && row[2].to_i <= 1968
+        movie = ClassicMovie.new(row)
+        @movies << movie
+      elsif row[2].to_i >= 1968 && row[2].to_i <= 2000
+        movie = ModernMovie.new(row)
+        @movies << movie
+      else 
+        movie = NewMovie.new(row)
+        @movies << movie
       end
+    end
   end
   def all
     moviesCollection = []

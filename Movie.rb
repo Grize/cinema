@@ -1,5 +1,17 @@
 class Movie
   attr_accessor :url, :name, :year, :country, :createdDate, :genre, :timing, :rating, :producer, :actors
+  def initialize(row)
+    @url = row[0]
+    @name = row[1]
+    @year = row[2].to_i
+    @country = row[3]
+    @createdDate = anyStringToDate(row[4])
+    @genre = row[5]
+    @timing = row[6].to_i
+    @rating = ratingInStars(row[7].to_f)
+    @producer = row[8]
+    @actors = row[9]
+  end
   def has_genre?(genre) 
     if @genre.include?(genre)
       true
@@ -8,9 +20,6 @@ class Movie
     else
       false
     end
-  end
-  def to_s
-    "#{@name} - #{@year}, #{@country}, #{@createdDate} - #{@genre}, #{@timing}, #{@rating}, #{@producer}, #{@actors}"
   end
 end
 def anyStringToDate(row)
