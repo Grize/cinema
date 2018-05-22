@@ -1,17 +1,19 @@
 require 'csv'
 require 'ostruct'
 require 'date'
-require './MovieCollection.rb'
-require './Netflix.rb'
-require './theater.rb'
+require_relative './Movie.rb'
+require_relative './MovieCollection.rb'
+require_relative './Netflix.rb'
+require_relative './theater.rb'
 
-collection = MoviesCollection.new
-netflix = Netflix.new
-netflix.pay(25)
-#netflix.show('Comedy', :modern)
-netflix.how_much?('Terminator')
-theater = Theater.new
-theater.show(14)
+file = ARGV.first || 'movies.txt'
+unless File.exist?(file)
+  puts "File not found"
+  exit
+end
+
+collection = MoviesCollection.new(file)
+
 def sortByCreatedDate(collection)
   collection.stats(:month)
 end
@@ -74,7 +76,6 @@ def printAllInfoAboutFilm(arrayWithNeedFilms)
   end
 end
 
-#films = checkForFile(ARGV.first)
 filmsWithMax = findFilmsWithMax(collection)
 printNameAndRating(filmsWithMax)
 filmCountry(collection)
