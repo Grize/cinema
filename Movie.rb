@@ -1,39 +1,64 @@
 class Movie
-  attr_accessor :url, :name, :year, :country, :createdDate, :genre, :timing, :rating, :producer, :actors
-  def initialize(row)
-    @url = row[0]
-    @name = row[1]
-    @year = row[2].to_i
-    @country = row[3]
-    @createdDate = anyStringToDate(row[4])
-    @genre = row[5]
-    @timing = row[6].to_i
-    @rating = ratingInStars(row[7].to_f)
-    @producer = row[8]
-    @actors = row[9]
+  
+  require_relative './movieTypes.rb'
+  
+  attr_reader :url, :name, :year, :country, :createdDate, :genre, :timing, :rating, :producer, :actors
+
+  MOVIE_CLASS = {
+    1900..1945 => AncientMovie,
+    1945..1968 => ClassicMovie,
+    1968..2000 => ModernMovie,
+    2000..3000 => NewMovie
+  }.freeze
+
+  def initialize(movie,movie_collection)
+    @url = movie[0]
+    @name = movie[1]
+    @year = movie[2]
+    @country = movie[3]
+    @createdDate = anyStringToDate(movie[4])
+    @genre = movie[5].split(',')
+    @timing = movie[6].to_i
+    @rating = ratingInStars(movie[7].to_f)
+    @producer = movie[8]
+    @actors = movie[9].split(',')
+    @movie_collection = movie_collection
   end
+  
   def has_genre?(genre) 
-    if @genre.include?(genre)
-      true
-    elsif genre == 'Tragedy'
-      raise "No such genre!"
+    raise ArgumentError, "Don't found #{genre}" unless @movie_collection.genre_exist? genre
+    self.genre.include? genre
+  end
+
+  def period()
+    self.class.name
+  end
+
+  def self.create(movie, movie_collection)
+    _, movie_class = MOVIE_CLASS.detect { |year, period| year.cover?(movie[2].to_i) }
+
+    raise ArgumentError, "Imposible to recognize period" unless movie_class
+
+    movie_class.new(movie, movie_collection)
+  
+  end
+
+  private
+  
+  def anyStringToDate(movie)
+    if movie.length == 10
+      Date.parse(movie)
+    elsif movie.length == 7
+      movie += '-01'
+      Date.parse(movie)
     else
-      false
+      movie += '-01-01'  #change in next time
+      Date.parse(movie)
     end
   end
-end
-def anyStringToDate(row)
-      if row.length == 10
-      Date.parse(row)
-    elsif row.length == 7
-    row += '-01'
-    Date.parse(row)
-    else
-      row += '-01-01'  #change in next time
-      Date.parse(row)
-    end
+  
+  def ratingInStars(floatRating)
+    string = '*'
+    string *= (floatRating - 8) * 10
   end
-def ratingInStars(floatRating)
-  string = '*'
-  string *= (floatRating - 8) * 10
 end

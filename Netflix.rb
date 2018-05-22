@@ -1,35 +1,43 @@
-require './MovieCollection.rb'
-require './Movie.rb'
+require_relative './MovieCollection.rb'
+
 require 'pry'
-require './movieTypes.rb'
 require 'date'
+require 'pickup'
+
 class Netflix < MoviesCollection
-  TIMENOW = Time.now
-  @@money = 0
-  MOVIES_TYPES = { ancient: 1900..1945,
-                   classic: 1946..1968,
-                   modern: 1969..2000,
-                   new: 2001..3000}.freeze                
-  def initialize
+  TIMENOW = Time.now            
+  
+  MOVIE_TYPES = {:ancient => AncientMovie,
+                 :classic => ClassicMovie,
+                 :modern => ModernMovie,
+                 :new => NewMovie}.freeze
+
+  attr_reader :money
+
+  def initialize(file)
     super
+    @money = 0
   end
+  
   def pay(money)
     #binding.pry
-    @@money += money
+    @money += money
   end
+  
   def how_much?(name)
     neededMovies = []
     neededMovies.concat(@movies.select{ |movie| movie.send(:name).include? name})
     neededMovies.first.class::COST
   end
+  
   def show(neededPosition, period)
     #binding.pry
-    neededMovies = []
-    neededMovies.concat(@movies.select { |movie| movie.has_genre?(neededPosition) && MOVIES_TYPES[period] === movie.send(:year) })
-    @@money -= neededMovies.first.class::COST
-    if @@money < neededMovies.first.class::COST
+    neededMovie = @movies.select { |movie| movie.has_genre?(neededPosition) && MOVIE_TYPES[period] == movie.class }.sample
+    @money -= neededMovie.class::COST
+    if @money < neededMovie.class::COST
       raise "You don't have money"
     end
-    puts "Now showing: #{neededMovies.first.name}, time start: #{TIMENOW.strftime("%H:%M:%S")} - time end: #{(TIMENOW + (neededMovies.first.timing * 60)).strftime("%H:%M:%S")} "
+    puts "Now showing: #{neededMovie.name}, time start: #{TIMENOW.strftime("%H:%M:%S")} - time end: #{(TIMENOW + (neededMovie.timing * 60)).strftime("%H:%M:%S")} "
   end
+
 end
