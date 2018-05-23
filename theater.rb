@@ -1,8 +1,8 @@
-require_relative 'movie_collection.rb'
+require_relative './MovieCollection.rb'
 
 require 'pry'
 
-class Theater < MovieCollection
+class Theater < MoviesCollection
   
   def show(time)
     neededFilms = []

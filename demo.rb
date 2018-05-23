@@ -1,10 +1,10 @@
 require 'csv'
 require 'ostruct'
 require 'date'
-require_relative 'movie.rb'
-require_relative 'movie_collection.rb'
-require_relative 'netflix.rb'
-require_relative 'theater.rb'
+require_relative './Movie.rb'
+require_relative './MovieCollection.rb'
+require_relative './Netflix.rb'
+require_relative './theater.rb'
 
 file = ARGV.first || 'movies.txt'
 unless File.exist?(file)
@@ -12,7 +12,7 @@ unless File.exist?(file)
   exit
 end
 
-collection = MovieCollection.new(file)
+collection = MoviesCollection.new(file)
 
 def sortByCreatedDate(collection)
   collection.stats(:month)

@@ -1,9 +1,6 @@
 class Movie
   
-  require_relative 'ancient_movie.rb'
-  require_relative 'classic_movie.rb'
-  require_relative 'modern_movie.rb'
-  require_relative 'new_movie.rb'
+  require_relative './movieTypes.rb'
   
   attr_reader :url, :name, :year, :country, :createdDate, :genre, :timing, :rating, :producer, :actors
 
