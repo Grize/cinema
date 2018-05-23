@@ -1,10 +1,10 @@
-require_relative './MovieCollection.rb'
+require_relative 'movie_collection.rb'
 
 require 'pry'
 require 'date'
 require 'pickup'
 
-class Netflix < MoviesCollection
+class Netflix < MovieCollection
   TIMENOW = Time.now            
   
   MOVIE_TYPES = {:ancient => AncientMovie,

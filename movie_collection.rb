@@ -1,6 +1,6 @@
 require 'csv'
 
-class MoviesCollection
+class MovieCollection
   
   attr_reader  :genre
   
