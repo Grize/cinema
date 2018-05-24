@@ -15,7 +15,7 @@ class Theater < MovieCollection
       neededFilms.concat(@movies.select { |movie| movie.has_genre?('Drama')})
       neededFilms.concat(@movies.select { |movie| movie.has_genre?('Horror')})
     end
-    puts neededFilms.uniq.sample
+    puts neededFilms
   end
   
   def when?(name)

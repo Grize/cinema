@@ -12,10 +12,11 @@ unless File.exist?(file)
   exit
 end
 
-collection = MoviesCollection.new(file)
+collection = Theater.new(file)
+collection.show(15)
 
 def sortByCreatedDate(collection)
-  collection.stats(:month)
+  collection.stats(:createdDate)
 end
 
 def findFilmsWithMax(collection)

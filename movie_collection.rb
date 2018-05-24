@@ -23,6 +23,7 @@ class MovieCollection
   end
   
   def sort_by(neededPosition)
+    raise ArgumentError, 'Wrong argument' unless @movies.first.respond_to?(neededPosition)
     @movies.sort_by {|movie| movie.send(neededPosition)}
   end
   
@@ -33,20 +34,7 @@ class MovieCollection
   end
   
   def stats(neededPosition)
-    statistic = Hash.new(0)
-    @movies.each do |movie|
-      if neededPosition == :month
-        month = Date::MONTHNAMES[movie.send(:createdDate).mon]
-        statistic[month] += 1
-      elsif neededPosition == :actors || neededPosition == :genre
-        array = movie.send(neededPosition).split(',').first.to_s
-        statistic[array] += 1
-      else
-        thing = movie.send(neededPosition)
-        statistic[thing] += 1
-      end
-    end
-    statistic
+    @movies.flat_map(&neededPosition).compact.each_with_object(Hash.new(0)) { |count, genre| genre[count] += 1}
   end
 
 end
