@@ -14,12 +14,12 @@ class Movie
     2000..3000 => NewMovie
   }.freeze
 
-  def initialize(movie,movie_collection)
+  def initialize(movie, movie_collection)
     @url = movie[0]
     @name = movie[1]
     @year = movie[2]
     @country = movie[3]
-    @createdDate = anyStringToDate(movie[4])
+    @createdDate = movie[4]
     @genre = movie[5].split(',')
     @timing = movie[6].to_i
     @rating = ratingInStars(movie[7].to_f)
@@ -48,20 +48,9 @@ class Movie
 
   private
   
-  def anyStringToDate(movie)
-    if movie.length == 10
-      Date.parse(movie)
-    elsif movie.length == 7
-      movie += '-01'
-      Date.parse(movie)
-    else
-      movie += '-01-01'  #change in next time
-      Date.parse(movie)
-    end
-  end
-  
   def ratingInStars(floatRating)
     string = '*'
     string *= (floatRating - 8) * 10
   end
+
 end

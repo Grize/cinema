@@ -1,0 +1,7 @@
+http://imdb.com/title/tt0068646/?ref_=chttp_tt_2|The Godfather|1972|USA|1972-03-24|Crime,Drama|175 min|9.2|Francis Ford Coppola|Marlon Brando,Al Pacino,James Caan
+http://imdb.com/title/tt1375666/?ref_=chttp_tt_14|Inception|2010|USA|2010-07-16|Action,Mystery,Sci-Fi|148 min|8.8|Christopher Nolan|Leonardo DiCaprio,Joseph Gordon-Levitt,Ellen Page
+http://imdb.com/title/tt0047478/?ref_=chttp_tt_20|Seven Samurai|1954|Japan|1956-11-19|Drama|207 min|8.7|Akira Kurosawa|Toshirô Mifune,Takashi Shimura,Keiko Tsushima
+http://imdb.com/title/tt0034583/?ref_=chttp_tt_32|Casablanca|1942|USA|1943-01-23|Drama,Romance,War|88 min|8.6|Michael Curtiz|Humphrey Bogart,Ingrid Bergman,Paul Henreid
+http://imdb.com/title/tt0167260/?ref_=chttp_tt_9|The Lord of the Rings: The Return of the King|2003|USA|2003-12-17|Adventure,Fantasy|201 min|8.9|Peter Jackson|Elijah Wood,Viggo Mortensen,Ian McKellen
+http://imdb.com/title/tt1675434/?ref_=chttp_tt_38|The Intouchables|2011|France|2012-04-26|Biography,Comedy,Drama|112 min|8.6|Olivier Nakache|François Cluzet,Omar Sy,Anne Le Ny
+http://imdb.com/title/tt0054215/?ref_=chttp_tt_36|Psycho|1960|USA|1960-09-08|Horror,Mystery,Thriller|109 min|8.6|Alfred Hitchcock|Anthony Perkins,Janet Leigh,Vera Miles

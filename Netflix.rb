@@ -2,7 +2,6 @@ require_relative 'movie_collection.rb'
 
 require 'pry'
 require 'date'
-require 'pickup'
 
 class Netflix < MovieCollection
   TIMENOW = Time.now            
@@ -10,7 +9,8 @@ class Netflix < MovieCollection
   MOVIE_TYPES = {:ancient => AncientMovie,
                  :classic => ClassicMovie,
                  :modern => ModernMovie,
-                 :new => NewMovie}.freeze
+                 :new => NewMovie
+                }.freeze
 
   attr_reader :money
 

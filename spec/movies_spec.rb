@@ -1,4 +1,4 @@
-require './movies.rb'
+
 
 RSpec.describe 'Movies' do 
   let!(:films) {checkForFile}
